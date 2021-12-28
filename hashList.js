@@ -2,7 +2,7 @@ class HashTable {
     constructor() {
         this.storage = [];
         this.count = 0;
-        this.limit = 7;
+        this.limit = 20;
     }
     // 哈希函数
     hashFn(str, size = this.limit) {
@@ -25,9 +25,12 @@ class HashTable {
                 tuple[1] === val;
                 return
             }
+        } 
+        bucket.push([key, val])
+        this.count++;
+        if (this.count > this.limit * 0.75) {
+            this.resize(this.getPrime(this.limit * 2))
         }
-        bucket.push([key, value])
-        this.count++
     }
     get(key) {
         const index = this.hashFn(key);
@@ -50,6 +53,9 @@ class HashTable {
             if (tuple[0] === key) {
                 bucket.splice(i, 1)
                 this.count--
+                setTimeout(() => {
+
+                }, 0)
                 return true
             }
         }
@@ -57,6 +63,38 @@ class HashTable {
     }
     isEmpty() {
         return !this.count
+    }
+    resize(newLimit) {
+        const oldStorage = this.storage;
+        this.storage = [];
+        this.count = 0;
+        this.limit = newLimit;
+        for(let i = 0; i < oldStorage.length; i++) {
+            let bucket = oldStorage[i];
+            if(!bucket) {
+                continue
+            }
+            for (let m = 0; m < bucket.length; m++) {
+                let bucketItem = bucket[i]
+                this.put(bucketItem[0], bucketItem[1])
+            }
+        }
+    }
+    // 获取质数
+    getPrime(num) {
+        while(!this.isPrime(num)) {
+            num++
+        }
+        return num
+    }
+    // 是否是质数
+    isPrime(num) {
+        for (let i = 2; i <= Math.floor(Math.sqrt(num)); i++) {
+            if(num % 2 === 0) {
+                return false
+            }
+            return true
+        }
     }
 }
 const hashIns = new HashTable();

@@ -154,7 +154,9 @@ class BinarySearchTree{
             const replaceNode = this.getReplace(node)
             replaceNode.left = node.left
             replaceNode.right = node.right
-            if(node !== this.root) {
+            if(node === this.root) {
+                this.root = replaceNode
+            } else {
                 isLeft ? (parent.left = replaceNode) : (parent.right = replaceNode)
             }
         }
@@ -210,7 +212,7 @@ ins.preOrderTraversal((key) => {
 // console.log(ins.max);
 // console.log(ins.find(13));
 console.log(res);
-console.log(ins.remove(23));
+console.log(ins.remove(11));
 let res2 = ''
 ins.preOrderTraversal((key) => {
     res2 = res2 + key + '-'

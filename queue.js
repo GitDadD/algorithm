@@ -2,10 +2,11 @@ class Queue {
     constructor() {
         this.data = []
     }
-    get data() {
+    get value() {
         return this.data
     } 
-    set data() {
+    set value(val) {
+        return this.data
     }
     enqueue(...args) {
         this.data.push(...args)
@@ -23,7 +24,7 @@ class Queue {
         return this.data.length
     }
     toString(sp = ',') {
-        return this.data .join(sp)
+        return this.data.join(sp)
     }
 }
 
@@ -45,6 +46,8 @@ console.log(drummingFlowers(['a', 'b', 'c', 'd', 'e'], 3));
 
 // 队列优先级
 
+
+module.exports = {Queue}
 
 
  
